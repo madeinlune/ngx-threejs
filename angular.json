@@ -3,5 +3,48 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "threejs": {
+      "projectType": "library",
+      "root": "projects/threejs",
+      "sourceRoot": "projects/threejs/src",
+      "prefix": "tjs",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/threejs/tsconfig.lib.json",
+            "project": "projects/threejs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/threejs/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/threejs/src/test.ts",
+            "tsConfig": "projects/threejs/tsconfig.spec.json",
+            "karmaConfig": "projects/threejs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/threejs/tsconfig.lib.json",
+              "projects/threejs/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": "fa4e0f4e-1e3b-48bc-bea7-8ecd224f794b"
+  },
+  "defaultProject": "threejs"
 }
