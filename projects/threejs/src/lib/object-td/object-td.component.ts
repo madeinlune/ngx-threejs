@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Object3D, Vector3} from 'three';
 
 @Component({
@@ -6,10 +6,15 @@ import {Object3D, Vector3} from 'three';
   templateUrl: './object-td.component.html',
   styleUrls: ['./object-td.component.css']
 })
-export class ObjectTdComponent implements OnInit, OnDestroy {
+export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
 
   @Input()
   name: string = '' + Math.random() * 0xFFFFFF;
+
+  @Input()
+  showHelper!: boolean;
+
+  private helper!: Object3D | null;
 
   #object3D!: Object3D;
   set object3D(value: Object3D) {
@@ -21,58 +26,89 @@ export class ObjectTdComponent implements OnInit, OnDestroy {
     return this.#object3D;
   }
 
-  #position: Vector3 | undefined;
   @Input()
-  set position(value: { x: number, y: number, z: number }) {
-    this.#position = new Vector3(value.x, value.y, value.z);
-    this.update();
-  }
+  position!: Vector3;
 
-  #scale: Vector3 | undefined;
   @Input()
-  set scale(value: { x: number, y: number, z: number }) {
-    this.#scale = new Vector3(value.x, value.y, value.z);
-    this.update();
-  }
+  scale!: Vector3;
 
-  #rotation: Vector3 | undefined;
   @Input()
-  set rotation(value: { x: number, y: number, z: number }) {
-    this.#rotation = new Vector3(value.x, value.y, value.z);
-    this.update();
-  }
+  rotation!: Vector3;
 
   constructor() {
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
   }
 
   ngOnInit(): void {
   }
 
-  protected update(): void {
+  ngAfterViewInit(): void {
+    this.update();
     this.updatePosition();
     this.updateScale();
     this.updateRotation();
+    this.updateHelper();
+  }
+
+  protected update(changes?: SimpleChanges): void {
+    if (changes?.position) {
+      this.updatePosition();
+    }
+    if (changes?.scale) {
+      this.updateScale();
+    }
+    if (changes?.rotation) {
+      this.updateRotation();
+    }
+    if (changes?.showHelper) {
+      this.updateHelper();
+    }
+  }
+
+  protected updateHelper(): void {
+    if (this.showHelper) {
+      this.helper = this.createHelper();
+      if (this.helper) {
+        this.object3D.add(this.helper);
+      }
+    } else {
+      this.removeHelper();
+    }
+  }
+
+  protected createHelper(): Object3D | null {
+    return null;
+  }
+
+  protected removeHelper(): void {
+    if (!!this.helper) {
+      // TODO if object exists before trying to remove it from parent
+      this.object3D.remove(this.helper);
+    }
   }
 
   protected updatePosition(): void {
-    if (this.#position && this.object3D) {
-      this.object3D.position.set(this.#position.x, this.#position.y, this.#position.z);
+    if (this.position && this.object3D) {
+      this.object3D.position.set(this.position.x, this.position.y, this.position.z);
     }
   }
 
   protected updateScale(): void {
-    if (this.#scale && this.object3D) {
-      this.object3D.scale.set(this.#scale.x, this.#scale.y, this.#scale.z);
+    if (this.scale && this.object3D) {
+      this.object3D.scale.set(this.scale.x, this.scale.y, this.scale.z);
     }
   }
 
   protected updateRotation(): void {
-    if (this.#rotation && this.object3D) {
-      this.object3D.rotation.set(this.#rotation.x, this.#rotation.y, this.#rotation.z);
+    if (this.rotation && this.object3D) {
+      this.object3D.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.update(changes);
   }
 
 }
