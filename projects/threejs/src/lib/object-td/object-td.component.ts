@@ -1,44 +1,66 @@
-import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
+  SimpleChanges,
+  SkipSelf
+} from '@angular/core';
 import {Object3D, Vector3} from 'three';
 import {ThreeJsParent} from '../models/three-js-parent';
+
+export type InteractiveState = 'hover' | 'active' | null;
 
 @Component({
   selector: 'tjs-object-td',
   templateUrl: './object-td.component.html',
-  styleUrls: ['./object-td.component.css']
+  styleUrls: ['./object-td.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
+
+  interactiveState!: InteractiveState;
 
   @Input()
   name: string = '' + Math.random() * 0xFFFFFF;
 
   @Input()
   showHelper!: boolean;
-
+  @Input()
+  position!: Vector3;
+  @Input()
+  scale!: Vector3;
+  @Input()
+  rotation!: Vector3;
   private helper!: Object3D | null;
-
   #object3D!: Object3D;
-  set object3D(value: Object3D) {
-    this.#object3D = value;
-    this.update();
+
+  constructor(
+    @Optional() @SkipSelf() protected parent: ThreeJsParent
+  ) {
+  }
+
+  @Input()
+  set hovered(hovered: boolean) {
+    if (hovered) {
+      this.interactiveState = 'hover';
+    } else {
+      this.interactiveState = null;
+    }
   }
 
   get object3D(): Object3D {
     return this.#object3D;
   }
 
-  @Input()
-  position!: Vector3;
-
-  @Input()
-  scale!: Vector3;
-
-  @Input()
-  rotation!: Vector3;
-
-  constructor(
-    @Optional() @SkipSelf() protected parent: ThreeJsParent
-  ) {
+  set object3D(value: Object3D) {
+    this.#object3D = value;
+    this.#object3D.userData = {component: this};
+    this.update();
   }
 
   ngOnDestroy(): void {
@@ -46,6 +68,7 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit(): void {
@@ -61,6 +84,10 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     this.updateHelper();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.update(changes);
+  }
+
   protected update(changes?: SimpleChanges): void {
     if (changes?.position) {
       this.updatePosition();
@@ -74,6 +101,7 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     if (changes?.showHelper) {
       this.updateHelper();
     }
+    console.log('this.hovered', this.hovered);
   }
 
   protected updateHelper(): void {
@@ -92,7 +120,6 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
 
   protected removeHelper(): void {
-    console.log('removeHelper() this.helper', this.helper);
     if (!!this.helper) {
       // TODO if object exists before trying to remove it from parent
       this.object3D.remove(this.helper);
@@ -115,10 +142,6 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     if (this.rotation && this.object3D) {
       this.object3D.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.update(changes);
   }
 
 }

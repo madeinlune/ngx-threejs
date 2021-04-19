@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, Input, NgModule, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {BufferGeometry, Mesh, MeshNormalMaterial} from 'three';
 import {ObjectTdComponent} from '../object-td/object-td.component';
 import {CommonModule} from '@angular/common';
@@ -9,7 +9,8 @@ import {CommonModule} from '@angular/common';
   styleUrls: ['./mesh.component.scss'],
   providers: [
     {provide: ObjectTdComponent, useExisting: forwardRef(() => MeshComponent)}
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestroy {
 
@@ -33,6 +34,13 @@ export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestro
   }
 
   render(): void {
+  }
+
+  protected update(changes?: SimpleChanges): void {
+    super.update(changes);
+    if (changes?.material) {
+      (this.object3D as Mesh).material = this.material;
+    }
   }
 
 }

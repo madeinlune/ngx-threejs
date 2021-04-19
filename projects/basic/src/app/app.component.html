@@ -37,19 +37,22 @@
   </tjs-spotlight>
 
   <tjs-mesh
+    #box1
     [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
     [position]="{x:-1.2, y: 0, z: 0}|vector3"
-    [material]="{color: 'orange', side:'front'|side}|meshPhongMaterial">
+    [material]="{color: box1.interactiveState === 'hover'?'hotpink':'orange', side:'front'|side}|meshPhongMaterial">
   </tjs-mesh>
 
+
+
   <tjs-mesh
+    #box2
     [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
     [position]="{x:1.2, y: 0, z: 0}|vector3"
-    [material]="{color: 'orange', side:'front'|side}|meshPhongMaterial">
+    [material]="{color: box2.interactiveState === 'hover'?'red':'orange', side:'front'|side}|meshPhongMaterial">
   </tjs-mesh>
 
 </tjs-three-js-stage>
-
 <!--
 <ng-container *ngIf="defaultCamera.camera">
 
