@@ -38,7 +38,7 @@ export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestro
 
   protected update(changes?: SimpleChanges): void {
     super.update(changes);
-    if (changes?.material) {
+    if (changes?.material && this.object3D) {
       (this.object3D as Mesh).material = this.material;
     }
   }
