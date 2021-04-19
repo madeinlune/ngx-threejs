@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ThreejsService } from './threejs.service';
+import { ThreeJsFontService } from './three-js-font.service';
 
-describe('ThreejsService', () => {
-  let service: ThreejsService;
+describe('ThreeJsFontService', () => {
+  let service: ThreeJsFontService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ThreejsService);
+    service = TestBed.inject(ThreeJsFontService);
   });
 
   it('should be created', () => {
