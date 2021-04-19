@@ -5,6 +5,7 @@ export * from './mesh';
 export * from './models';
 export * from './object-td';
 export * from './pipes';
+export * from './providers';
 export * from './services';
 export * from './texts';
 export * from './three-js-portal';

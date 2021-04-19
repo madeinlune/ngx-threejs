@@ -1,8 +1,10 @@
-import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, forwardRef, Inject, Input, NgModule, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
 import {Group, Object3D, SpotLight, SpotLightHelper} from 'three';
 import {CommonModule} from '@angular/common';
 import {LightComponent} from '../light.component';
 import {PointLightOptions} from '../point-light/point-light.component';
+import {ThreeJsParent} from '../../models/three-js-parent';
+import {HELPERS_COLOR} from '../../providers';
 
 export interface SportLightOptions extends PointLightOptions {
 
@@ -25,6 +27,12 @@ export class SpotlightComponent extends LightComponent implements OnInit, OnDest
   @Input()
   angle!: number;
 
+  constructor(
+    @Optional() @SkipSelf() protected parent: ThreeJsParent,
+    @Inject(HELPERS_COLOR) private helpersColor: number
+  ) {
+    super(parent);
+  }
 
   ngOnInit(): void {
 
@@ -39,7 +47,7 @@ export class SpotlightComponent extends LightComponent implements OnInit, OnDest
 
   protected createHelper(): Object3D | null {
     if (this.light) {
-      return new SpotLightHelper(this.light as SpotLight);
+      return new SpotLightHelper(this.light as SpotLight, this.helpersColor);
     }
     return null;
   }

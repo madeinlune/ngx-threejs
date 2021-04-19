@@ -8,7 +8,7 @@ import {
   OrbitControlsModule,
   PerspectiveCameraModule,
   PointLightModule,
-  SpotlightModule,
+  SpotlightModule, THREE_JS_PROVIDERS,
   ThreeJsPipesModule,
   ThreeJsStageModule
 } from 'threejs';
@@ -28,7 +28,9 @@ import {
     AmbientLightModule,
     SpotlightModule
   ],
-  providers: [],
+  providers: [
+    THREE_JS_PROVIDERS
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

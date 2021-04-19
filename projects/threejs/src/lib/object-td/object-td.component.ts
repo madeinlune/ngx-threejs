@@ -49,16 +49,16 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
 
   ngAfterViewInit(): void {
-    this.update();
-    this.updatePosition();
-    this.updateScale();
-    this.updateRotation();
-    this.updateHelper();
     if (this.parent) {
       this.parent.add(this);
     } else {
       console.warn('no parent for this light', this);
     }
+    this.update();
+    this.updatePosition();
+    this.updateScale();
+    this.updateRotation();
+    this.updateHelper();
   }
 
   protected update(changes?: SimpleChanges): void {
@@ -81,7 +81,6 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
       this.helper = this.createHelper();
       if (this.object3D && this.helper) {
         this.object3D.add(this.helper);
-        console.log('updateHelper() this.object3D', this.object3D);
       }
     } else {
       this.removeHelper();

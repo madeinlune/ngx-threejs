@@ -1,7 +1,9 @@
-import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, forwardRef, Inject, Input, NgModule, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
 import {LightComponent, LightOptions} from '../light.component';
 import {Group, Object3D, PointLight, PointLightHelper} from 'three';
 import {CommonModule} from '@angular/common';
+import {HELPERS_COLOR} from '../../providers/three-js.providers';
+import {ThreeJsParent} from '../../models/three-js-parent';
 
 export interface PointLightOptions extends LightOptions {
 
@@ -24,6 +26,13 @@ export class PointLightComponent extends LightComponent implements OnInit, OnDes
   @Input()
   decay!: number;
 
+  constructor(
+    @Optional() @SkipSelf() protected parent: ThreeJsParent,
+    @Inject(HELPERS_COLOR) private helpersColor: number
+  ) {
+    super(parent);
+  }
+
   ngOnInit(): void {
 
     const pointLight: PointLight = new PointLight();
@@ -41,7 +50,7 @@ export class PointLightComponent extends LightComponent implements OnInit, OnDes
 
   protected createHelper(): Object3D | null {
     if (this.light) {
-      return new PointLightHelper(this.light as PointLight);
+      return new PointLightHelper(this.light as PointLight, undefined, this.helpersColor);
     }
     return null;
   }
