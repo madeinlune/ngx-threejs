@@ -10,13 +10,9 @@ import {DirectionalLight, DirectionalLightHelper, Group} from 'three';
 })
 export class DirectionalLightComponent extends LightComponent implements OnInit {
 
-  constructor() {
-    super();
-  }
-
   ngOnInit(): void {
 
-    const directionalLight: DirectionalLight = new DirectionalLight(0xffffff, 5);
+    const directionalLight: DirectionalLight = new DirectionalLight();
     directionalLight.name = '' + Math.random() * 0xFFFFFF;
     this.light = directionalLight;
     this.light.castShadow = true;

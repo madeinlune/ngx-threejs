@@ -28,10 +28,6 @@ export class GltfLoaderComponent extends ObjectTdComponent implements OnInit {
 
   loader!: GLTFLoader;
 
-  constructor() {
-    super();
-  }
-
   ngOnInit(): void {
 
     this.object3D = new Group();

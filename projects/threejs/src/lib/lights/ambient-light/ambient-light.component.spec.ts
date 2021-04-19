@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AmbiantLightComponent } from './ambiant-light.component';
+import { AmbientLightComponent } from './ambiant-light.component';
 
 describe('AmbiantLightComponent', () => {
-  let component: AmbiantLightComponent;
-  let fixture: ComponentFixture<AmbiantLightComponent>;
+  let component: AmbientLightComponent;
+  let fixture: ComponentFixture<AmbientLightComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AmbiantLightComponent ]
+      declarations: [ AmbientLightComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AmbiantLightComponent);
+    fixture = TestBed.createComponent(AmbientLightComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

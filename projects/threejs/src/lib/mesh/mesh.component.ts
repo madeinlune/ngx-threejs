@@ -1,8 +1,7 @@
-import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit, Optional, SkipSelf} from '@angular/core';
+import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit} from '@angular/core';
 import {BufferGeometry, Mesh, MeshNormalMaterial} from 'three';
 import {ObjectTdComponent} from '../object-td/object-td.component';
 import {CommonModule} from '@angular/common';
-import {ThreeJsParent} from '../models/three-js-parent';
 
 @Component({
   selector: 'tjs-mesh',
@@ -20,15 +19,6 @@ export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestro
   @Input()
   material!: MeshNormalMaterial;
 
-  constructor(
-    @Optional() @SkipSelf() private parent: ThreeJsParent
-  ) {
-    super();
-  }
-
-  ngOnDestroy(): void {
-    this.parent.remove(this);
-  }
 
   ngOnInit(): void {
 
@@ -37,7 +27,6 @@ export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestro
     this.object3D = new Mesh(this.geometry, this.material);
     this.object3D.castShadow = true;
     this.object3D.name = this.name;
-    this.parent.add(this);
 
     console.log('this.parent', this.parent);
 

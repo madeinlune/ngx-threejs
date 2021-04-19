@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Light} from 'three';
 import {ObjectTdComponent} from '../object-td/object-td.component';
 import {Color} from 'three/src/math/Color';
@@ -13,7 +13,7 @@ export interface LightOptions {
   selector: 'tjs-light',
   template: ''
 })
-export class LightComponent extends ObjectTdComponent implements OnInit, LightOptions {
+export class LightComponent extends ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, LightOptions {
 
   @Input()
   color!: Color;
@@ -26,11 +26,21 @@ export class LightComponent extends ObjectTdComponent implements OnInit, LightOp
 
   protected light!: Light;
 
-  constructor() {
-    super();
-  }
+  protected update(changes?: SimpleChanges): void {
+    super.update(changes);
 
-  ngOnInit(): void {
+    if (this.light) {
+
+      if (!isNaN(this.intensity)) {
+        this.light.intensity = this.intensity;
+      }
+
+      if (this.color) {
+        this.light.color = this.color;
+      }
+
+    }
+
   }
 
 }

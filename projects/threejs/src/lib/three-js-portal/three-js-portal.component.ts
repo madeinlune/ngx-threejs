@@ -47,12 +47,6 @@ export class ThreeJsPortalComponent extends ObjectTdComponent implements OnInit,
 
   group!: Group;
 
-  constructor(
-    private threeJsService: ThreeJsService
-  ) {
-    super();
-  }
-
   ngOnInit(): void {
 
     this.sceneMask = new Scene();
@@ -105,8 +99,6 @@ export class ThreeJsPortalComponent extends ObjectTdComponent implements OnInit,
     console.log('this.camera', this.camera);
 
     // const maskPass: MaskPass = new MaskPass(sceneMaskPlane, this.camera);
-
-    this.threeJsService.addRenderer(this);
 
     this.update();
 

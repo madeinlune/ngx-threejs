@@ -1,10 +1,22 @@
-import {AfterViewInit, Component, ContentChildren, ElementRef, forwardRef, Input, OnInit, QueryList} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ContentChildren,
+  ElementRef,
+  forwardRef,
+  Input,
+  OnInit,
+  Optional,
+  QueryList,
+  SkipSelf
+} from '@angular/core';
 import {ObjectTdComponent} from '../../object-td/object-td.component';
 import {ThreeJsService} from '../../three-js.service';
 import {Font, FrontSide, Group, Mesh, MeshPhongMaterial, Shape, ShapeBufferGeometry, Vector3} from 'three';
 import {ThreeJsFontService} from '../../services/three-js-font.service';
 import {filter, take} from 'rxjs/operators';
 import {CircleLayoutPipe} from '../../pipes/circle-layout.pipe';
+import {ThreeJsParent} from '../../models/three-js-parent';
 
 @Component({
   selector: 'tjs-text-shape',
@@ -29,12 +41,13 @@ export class TextShapeComponent extends ObjectTdComponent implements OnInit, Aft
   radius = 7;
 
   constructor(
+    @Optional() @SkipSelf() protected parent: ThreeJsParent,
     private hostElement: ElementRef,
     private threeJsService: ThreeJsService,
     private threeJsFontService: ThreeJsFontService,
     private circleLayoutPipe: CircleLayoutPipe
   ) {
-    super();
+    super(parent);
   }
 
   ngOnInit(): void {

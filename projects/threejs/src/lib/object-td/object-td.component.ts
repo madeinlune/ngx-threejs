@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
 import {Object3D, Vector3} from 'three';
+import {ThreeJsParent} from '../models/three-js-parent';
 
 @Component({
   selector: 'tjs-object-td',
@@ -35,10 +36,13 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   @Input()
   rotation!: Vector3;
 
-  constructor() {
+  constructor(
+    @Optional() @SkipSelf() protected parent: ThreeJsParent
+  ) {
   }
 
   ngOnDestroy(): void {
+    this.parent.remove(this);
   }
 
   ngOnInit(): void {
@@ -50,6 +54,11 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     this.updateScale();
     this.updateRotation();
     this.updateHelper();
+    if (this.parent) {
+      this.parent.add(this);
+    } else {
+      console.warn('no parent for this light', this);
+    }
   }
 
   protected update(changes?: SimpleChanges): void {
@@ -70,8 +79,9 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   protected updateHelper(): void {
     if (this.showHelper) {
       this.helper = this.createHelper();
-      if (this.helper) {
+      if (this.object3D && this.helper) {
         this.object3D.add(this.helper);
+        console.log('updateHelper() this.object3D', this.object3D);
       }
     } else {
       this.removeHelper();
@@ -83,6 +93,7 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
 
   protected removeHelper(): void {
+    console.log('removeHelper() this.helper', this.helper);
     if (!!this.helper) {
       // TODO if object exists before trying to remove it from parent
       this.object3D.remove(this.helper);

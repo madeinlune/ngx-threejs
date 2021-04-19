@@ -1,5 +1,6 @@
 <tjs-three-js-stage
   #stage
+  [backgroundColor]="'white'"
   [orbitControls]="orbitControls.controls"
   [camera]="defaultCamera.camera">
 
@@ -21,17 +22,39 @@
 
   <tjs-point-light
     [showHelper]="true"
-    [position]="{x: 3, y: 3, z: 0}|vector3">
+    [position]="{x:-10, y: -10, z: -10}|vector3">
   </tjs-point-light>
 
-  <tjs-point-light
+  <tjs-ambient-light
     [showHelper]="true"
-    [position]="{x:-3, y: 3, z: 0}|vector3">
-  </tjs-point-light>
+    [intensity]="0.5">
+  </tjs-ambient-light>
+
+  <tjs-spotlight
+    [penumbra]="1"
+    [angle]="0.15"
+    [position]="{x:10, y: 10, z: 10}|vector3"
+    [showHelper]="true">
+  </tjs-spotlight>
 
   <tjs-mesh
-    [geometry]="{width: 2, height:2, depth: 2}|boxBufferGeometry"
-    [material]="{color: '#ff0000', side:'both'|side}|meshPhongMaterial">
+    [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
+    [position]="{x:-1.2, y: 0, z: 0}|vector3"
+    [material]="{color: 'orange', side:'front'|side}|meshPhongMaterial">
+  </tjs-mesh>
+
+  <tjs-mesh
+    [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
+    [position]="{x:1.2, y: 0, z: 0}|vector3"
+    [material]="{color: 'orange', side:'front'|side}|meshPhongMaterial">
   </tjs-mesh>
 
 </tjs-three-js-stage>
+
+<!--
+<ng-container *ngIf="defaultCamera.camera">
+
+  <pre>x:{{defaultCamera.camera.position.x}}, y:{{defaultCamera.camera.position.y}}, z:{{defaultCamera.camera.position.z}}</pre>
+
+</ng-container>
+-->

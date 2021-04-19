@@ -1,8 +1,7 @@
-import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit, Optional, SimpleChanges, SkipSelf} from '@angular/core';
+import {Component, forwardRef, Input, NgModule, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {LightComponent, LightOptions} from '../light.component';
 import {Group, Object3D, PointLight, PointLightHelper} from 'three';
 import {CommonModule} from '@angular/common';
-import {ThreeJsParent} from '../../models/three-js-parent';
 
 export interface PointLightOptions extends LightOptions {
 
@@ -17,7 +16,7 @@ export interface PointLightOptions extends LightOptions {
   styleUrls: ['./point-light.component.css'],
   providers: [{provide: LightComponent, useExisting: forwardRef(() => PointLightComponent)}]
 })
-export class PointLightComponent extends LightComponent implements OnInit, OnDestroy, LightOptions {
+export class PointLightComponent extends LightComponent implements OnInit, OnDestroy, LightOptions, PointLightOptions {
 
   @Input()
   distance!: number;
@@ -25,27 +24,14 @@ export class PointLightComponent extends LightComponent implements OnInit, OnDes
   @Input()
   decay!: number;
 
-  constructor(
-    @Optional() @SkipSelf() private parent: ThreeJsParent
-  ) {
-    super();
-  }
-
-  ngOnDestroy(): void {
-    this.parent.remove(this);
-  }
-
   ngOnInit(): void {
 
-    const pointLight: PointLight = new PointLight(0xffffff, 5);
+    const pointLight: PointLight = new PointLight();
     pointLight.name = 'pointLight-' + this.name;
     this.light = pointLight;
-    this.light.castShadow = true;
     this.object3D = new Group();
     this.object3D.name = this.name;
     this.object3D.add(this.light);
-
-    this.parent.add(this);
 
   }
 
@@ -54,7 +40,10 @@ export class PointLightComponent extends LightComponent implements OnInit, OnDes
   }
 
   protected createHelper(): Object3D | null {
-    return new PointLightHelper(this.light as PointLight);
+    if (this.light) {
+      return new PointLightHelper(this.light as PointLight);
+    }
+    return null;
   }
 
 }

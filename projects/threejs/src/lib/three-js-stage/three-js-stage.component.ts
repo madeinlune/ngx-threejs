@@ -5,6 +5,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {CommonModule} from '@angular/common';
 import {ThreeJsParent} from '../models/three-js-parent';
 import {ObjectTdComponent} from '../object-td';
+import {Color} from 'three/src/math/Color';
 
 @Component({
   selector: 'tjs-three-js-stage',
@@ -23,6 +24,9 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
   camera!: Camera;
 
   @Input()
+  backgroundColor!: Color | string | number;
+
+  @Input()
   set orbitControls(value: OrbitControls) {
     this.threeJsService.orbitControls = value;
   }
@@ -39,7 +43,7 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
 
     this.renderer = new WebGLRenderer({antialias: true});
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0x303030);
+    this.renderer.setClearColor(this.backgroundColor);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.scene.add(new GridHelper(50, 1));

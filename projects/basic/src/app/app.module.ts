@@ -2,8 +2,16 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {MeshModule, OrbitControlsModule, PointLightModule, ThreeJsPipesModule, ThreeJsStageModule} from 'threejs';
-import {PerspectiveCameraModule} from '../../../threejs/src/lib/cameras/perspective-camera/perspective-camera.component';
+import {
+  AmbientLightModule,
+  MeshModule,
+  OrbitControlsModule,
+  PerspectiveCameraModule,
+  PointLightModule,
+  SpotlightModule,
+  ThreeJsPipesModule,
+  ThreeJsStageModule
+} from 'threejs';
 
 @NgModule({
   declarations: [
@@ -16,7 +24,9 @@ import {PerspectiveCameraModule} from '../../../threejs/src/lib/cameras/perspect
     MeshModule,
     PointLightModule,
     OrbitControlsModule,
-    PerspectiveCameraModule
+    PerspectiveCameraModule,
+    AmbientLightModule,
+    SpotlightModule
   ],
   providers: [],
   bootstrap: [AppComponent]
