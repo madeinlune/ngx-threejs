@@ -51,13 +51,13 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   data!: any;
 
   @Input()
-  parentName!: string;
+  parentName: string | undefined | null;
 
   @Output()
-  objectHover: EventEmitter<ObjectTdEvent|null> = new EventEmitter<ObjectTdEvent|null>();
+  objectHover: EventEmitter<ObjectTdEvent | null> = new EventEmitter<ObjectTdEvent | null>();
 
   @Output()
-  objectClick: EventEmitter<ObjectTdEvent|null> = new EventEmitter<ObjectTdEvent|null>();
+  objectClick: EventEmitter<ObjectTdEvent | null> = new EventEmitter<ObjectTdEvent | null>();
 
   private helper!: Object3D | null;
   #object3D!: Object3D;
@@ -81,6 +81,7 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
 
   @Input()
   set active(active: boolean) {
+    console.log('active', active);
     if (active) {
       this.interactiveState = 'active';
       this.objectClick.emit({component: this});

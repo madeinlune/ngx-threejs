@@ -26,7 +26,7 @@ export function menuFactory(): MenuItem[] {
   for (let i = 0; i < 5; i++) {
     menu.push({
       id: i,
-      label: 'Rock 0' + (i + 1),
+      label: 'Cube 0' + (i + 1),
       path: 'rock/' + i,
       contentId: i
     });
@@ -42,7 +42,7 @@ export function contentsFactory(): Content[] {
   for (let i = 0; i < 5; i++) {
     contents.push({
       id: i,
-      label: 'Node Rock 0' + (i + 1),
+      label: 'Cube 0' + (i + 1),
       path: 'rock/' + i
     });
   }

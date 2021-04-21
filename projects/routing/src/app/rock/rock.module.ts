@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RockRoutingModule } from './rock-routing.module';
 import { RockComponent } from './rock.component';
-import {MeshModule, ThreeJsPipesModule} from 'threejs';
+import {GroupModule, MeshModule, TextShapeModule, ThreeJsPipesModule} from 'threejs';
 
 
 @NgModule({
@@ -12,7 +12,9 @@ import {MeshModule, ThreeJsPipesModule} from 'threejs';
     CommonModule,
     RockRoutingModule,
     ThreeJsPipesModule,
-    MeshModule
+    MeshModule,
+    TextShapeModule,
+    GroupModule
   ]
 })
 export class RockModule { }

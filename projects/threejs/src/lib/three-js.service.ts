@@ -51,6 +51,8 @@ export class ThreeJsService {
 
   onMouseClick(event: MouseEvent): void {
 
+    event.preventDefault();
+
     if (this.clicked) {
       this.clicked.active = false;
     }

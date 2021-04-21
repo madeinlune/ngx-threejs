@@ -20,6 +20,7 @@ export class RockComponent implements OnInit {
   );
 
   selectedGroupName$: Observable<string | null> = this.selectionService.selectedGroupName$;
+  currentContent$: Observable<Content | null> = this.selectionService.currentContent$;
 
   constructor(
     @Inject(MENU) public menu: MenuItem[],

@@ -1,7 +1,7 @@
 <tjs-three-js-stage
   #stage
   [backgroundColor]="'white'"
-  [orbitControls]="orbitControls?.controls"
+  [orbitControls]="orbitControls.controls"
   [camera]="defaultCamera.camera">
 
   <tjs-mesh #ground
@@ -35,6 +35,7 @@
   </tjs-directional-light>
 
   <tjs-gltf-loader
+    (objectClick)="onRockClicked($event)"
     [castShadow]="true"
     [receiveShadow]="true"
     [position]="{x: 0, y: 1.2, z: 0}|vector3"

@@ -9,12 +9,22 @@ import {map} from 'rxjs/operators';
 })
 export class SelectionService {
 
-  contentId$: ReplaySubject<number> = new ReplaySubject<number>(1);
+  contentId$: ReplaySubject<number | null> = new ReplaySubject<number | null>(1);
 
   selectedMenuItem$: Observable<MenuItem | null> = this.contentId$.pipe(
     map(id => {
-        if (this.menu && !isNaN(id)) {
+        if (this.menu && id !== null && !isNaN(id)) {
           return this.menu.filter(mItem => mItem.contentId === id).shift() as MenuItem;
+        }
+        return null;
+      }
+    )
+  );
+
+  currentContent$: Observable<Content | null> = this.selectedMenuItem$.pipe(
+    map(selectedMenuItem => {
+        if (selectedMenuItem) {
+          return this.contents.filter(content => content.id === selectedMenuItem.contentId).shift() as Content;
         }
         return null;
       }
@@ -37,7 +47,7 @@ export class SelectionService {
   ) {
   }
 
-  set contentId(id: number) {
+  set contentId(id: number | null) {
     this.contentId$.next(id);
   }
 }

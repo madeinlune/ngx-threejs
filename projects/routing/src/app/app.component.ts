@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, Inject, NgZone, OnInit, ViewChild} from '@angular/core';
-import {ObjectTdEvent, OrbitControlsComponent, ThreeJsService} from 'threejs';
-import {Router} from '@angular/router';
+import {ObjectTdEvent, OrbitControlsComponent, ThreeJsFontService, ThreeJsService} from 'threejs';
+import {ActivatedRoute, Event, NavigationEnd, Router} from '@angular/router';
 import {Content, MenuItem} from './models';
 import {CONTENTS, MENU} from './app.providers';
 import {Observable} from 'rxjs';
 import {Vector3} from 'three';
 import {SelectionService} from './selection.service';
-import {map, tap} from 'rxjs/operators';
+import {filter, map, tap} from 'rxjs/operators';
+import {gsap} from 'gsap';
 
 @Component({
   selector: 'app-root',
@@ -23,15 +24,20 @@ export class AppComponent implements OnInit {
       const defaultPosition: Vector3 = new Vector3(0, 5, 0);
       if (selectedGroupName) {
         const position: Vector3 | undefined = this.threeJsService.scene.getObjectByName(selectedGroupName)?.position;
-        return position ? position : defaultPosition;
+        if (position) {
+          defaultPosition.x = position.x;
+          defaultPosition.y = 5;
+          defaultPosition.z = position.z;
+        }
+        return defaultPosition;
       }
       return defaultPosition;
     }),
     tap(position => {
       if (this.orbitControlsComponent) {
-        this.orbitControlsComponent.controls.target.x = position.x;
-        this.orbitControlsComponent.controls.target.y = position.y;
-        this.orbitControlsComponent.controls.target.z = position.z;
+        gsap.to(this.orbitControlsComponent.controls.target,
+          {x: position.x, y: position.y, z: position.z, duration: 0.5}
+        );
       }
     })
   );
@@ -45,12 +51,24 @@ export class AppComponent implements OnInit {
     private selectionService: SelectionService,
     private threeJsService: ThreeJsService,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private activatedRoute: ActivatedRoute,
+    private fontService: ThreeJsFontService
   ) {
   }
 
   ngOnInit(): void {
+    this.fontService.loadFont('assets/font/AauxPro-Thin.ttf');
     this.orbitControlsTarget$.subscribe();
+    this.activatedRoute.url.subscribe(url => console.log('url', url));
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd)
+      ).subscribe((event: Event) => {
+      if ((event as NavigationEnd).url === '/') {
+        this.selectionService.contentId = null;
+      }
+    });
   }
 
   onMenuObjectClicked($event: ObjectTdEvent | null): void {
@@ -59,5 +77,11 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl($event.component.data.path, {state: {data: {parentName: $event.component.name}}});
       });
     }
+  }
+
+  onRockClicked($event: ObjectTdEvent | null): void {
+    this.ngZone.run(() => {
+      this.router.navigateByUrl('/');
+    });
   }
 }

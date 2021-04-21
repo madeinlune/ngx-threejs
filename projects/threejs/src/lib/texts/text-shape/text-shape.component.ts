@@ -5,6 +5,7 @@ import {
   ElementRef,
   forwardRef,
   Input,
+  NgModule,
   OnInit,
   Optional,
   QueryList,
@@ -17,6 +18,7 @@ import {ThreeJsFontService} from '../../services/three-js-font.service';
 import {filter, take} from 'rxjs/operators';
 import {CircleLayoutPipe} from '../../pipes/circle-layout.pipe';
 import {ThreeJsParent} from '../../models/three-js-parent';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'tjs-text-shape',
@@ -55,13 +57,17 @@ export class TextShapeComponent extends ObjectTdComponent implements OnInit, Aft
     this.object3D = new Group();
     this.object3D.name = this.name;
 
+  }
+
+  createText(): void {
+
     this.threeJsFontService.font$.pipe(
       filter(font => !!font),
       take(1)
     ).subscribe((font: Font) => {
 
       const matLite = new MeshPhongMaterial({
-        color: 0xFFFFFF,
+        color: 0x000000,
         transparent: true,
         opacity: 1,
         side: FrontSide
@@ -120,14 +126,12 @@ export class TextShapeComponent extends ObjectTdComponent implements OnInit, Aft
           const posX: number = shapeMesh.position.x;
           const radius = this.radius;
           const virtualWidth: number = (2 * Math.PI) * radius;
-          console.log('virtualWidth', virtualWidth);
           const xRatio: number = posX / (virtualWidth / 2);
           const degrees: number = 200 * xRatio;
           const angleRadian: number = (degrees * Math.PI) / 180;
           const position: Vector3 = this.circleLayoutPipe.transform({x: 0, y: 0, z: 0}, radius, angleRadian);
-          console.log('position', position);
           shapeMesh.position.set(position.x, position.y, position.z);
-          shapeMesh.lookAt(0, 0, 0);
+          shapeMesh.lookAt(this.position);
         });
 
         console.log('width', width);
@@ -137,17 +141,35 @@ export class TextShapeComponent extends ObjectTdComponent implements OnInit, Aft
 
     });
 
-    this.threeJsService.addRenderer(this);
-
   }
 
   ngAfterViewInit(): void {
-    console.log('paragraphs', this.paragraphs);
+    super.ngAfterViewInit();
+    console.log('this.paragraphs', this.paragraphs);
+    if (this.paragraphs) {
+      if (this.paragraphs.length > 0) {
+        this.createText();
+      }
+    }
   }
 
   render(): void {
     // this.object3D.rotation.x += 0.01;
     // this.object3D.rotation.y += 0.02;
   }
+
+}
+
+@NgModule({
+  declarations: [
+    TextShapeComponent
+  ],
+  exports: [TextShapeComponent],
+  imports: [
+    CommonModule
+  ],
+  providers: []
+})
+export class TextShapeModule {
 
 }

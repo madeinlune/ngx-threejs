@@ -54,6 +54,7 @@ export class GltfLoaderComponent extends ObjectTdComponent implements OnInit {
           gltf.scene.traverse((object) => {
 
               if (object instanceof Mesh) {
+                object.userData = {component: this};
                 if (this.castShadow) {
                   object.castShadow = this.castShadow;
                 }
