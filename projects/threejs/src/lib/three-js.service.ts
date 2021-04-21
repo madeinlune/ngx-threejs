@@ -22,12 +22,16 @@ export class ThreeJsService {
   raycaster: Raycaster = new Raycaster();
 
   intersected: ObjectTdComponent | undefined | null;
+  clicked: ObjectTdComponent | undefined | null;
 
   constructor(
     private ngZone: NgZone
   ) {
 
     window.addEventListener('mousemove', this.onMouseMove.bind(this), false);
+    window.addEventListener('touchmove', this.onTouchMove.bind(this), false);
+    window.addEventListener('click', this.onMouseClick.bind(this), false);
+    window.addEventListener('touchstart', this.onTouchStart.bind(this), false);
 
   }
 
@@ -35,6 +39,41 @@ export class ThreeJsService {
 
     this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  }
+
+  onTouchMove(event: TouchEvent): void {
+
+    this.mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+
+  }
+
+  onMouseClick(event: MouseEvent): void {
+
+    if (this.clicked) {
+      this.clicked.active = false;
+    }
+
+    this.clicked = this.intersected;
+
+    if (this.clicked) {
+      this.clicked.active = true;
+    }
+
+  }
+
+  onTouchStart(event: TouchEvent): void {
+
+    if (this.clicked) {
+      this.clicked.active = false;
+    }
+
+    this.clicked = this.intersected;
+
+    if (this.clicked) {
+      this.clicked.active = true;
+    }
 
   }
 
@@ -63,7 +102,7 @@ export class ThreeJsService {
       this.raycaster.setFromCamera(this.mouse, this.camera);
 
       // calculate objects intersecting the picking ray
-      const intersects = this.raycaster.intersectObjects(this.scene.children);
+      const intersects = this.raycaster.intersectObjects(this.scene.children, true);
 
       if (intersects.length > 0) {
 
@@ -82,7 +121,6 @@ export class ThreeJsService {
             this.ngZone.run(() => {
               if (this.intersected) {
                 this.intersected.hovered = true;
-                console.log('this.intersected', this.intersected);
               }
             });
           }

@@ -22,7 +22,7 @@ export class LightComponent extends ObjectTdComponent implements OnInit, OnDestr
   intensity!: number;
 
   @Input()
-  castShadow!: boolean;
+  castShadow = false;
 
   protected light!: Light;
 
@@ -38,6 +38,8 @@ export class LightComponent extends ObjectTdComponent implements OnInit, OnDestr
       if (this.color) {
         this.light.color = this.color;
       }
+
+      this.light.castShadow = this.castShadow;
 
     }
 

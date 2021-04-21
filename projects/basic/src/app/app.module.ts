@@ -3,31 +3,32 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {
-  AmbientLightModule,
-  MeshModule,
-  OrbitControlsModule,
-  PerspectiveCameraModule,
-  PointLightModule,
-  SpotlightModule, THREE_JS_PROVIDERS,
-  ThreeJsPipesModule,
-  ThreeJsStageModule
+    AmbientLightModule, DirectionalLightModule,
+    MeshModule,
+    OrbitControlsModule,
+    PerspectiveCameraModule,
+    PointLightModule,
+    SpotlightModule, THREE_JS_PROVIDERS,
+    ThreeJsPipesModule,
+    ThreeJsStageModule
 } from 'threejs';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    ThreeJsPipesModule,
-    ThreeJsStageModule,
-    MeshModule,
-    PointLightModule,
-    OrbitControlsModule,
-    PerspectiveCameraModule,
-    AmbientLightModule,
-    SpotlightModule
-  ],
+    imports: [
+        BrowserModule,
+        ThreeJsPipesModule,
+        ThreeJsStageModule,
+        MeshModule,
+        PointLightModule,
+        OrbitControlsModule,
+        PerspectiveCameraModule,
+        AmbientLightModule,
+        SpotlightModule,
+        DirectionalLightModule
+    ],
   providers: [
     THREE_JS_PROVIDERS
   ],

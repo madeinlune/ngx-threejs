@@ -5,6 +5,7 @@ import {LightComponent} from '../light.component';
 import {PointLightOptions} from '../point-light/point-light.component';
 import {ThreeJsParent} from '../../models/three-js-parent';
 import {HELPERS_COLOR} from '../../providers';
+import {ThreeJsService} from '../../three-js.service';
 
 export interface SportLightOptions extends PointLightOptions {
 
@@ -29,9 +30,10 @@ export class SpotlightComponent extends LightComponent implements OnInit, OnDest
 
   constructor(
     @Optional() @SkipSelf() protected parent: ThreeJsParent,
+    protected threeJsService: ThreeJsService,
     @Inject(HELPERS_COLOR) private helpersColor: number
   ) {
-    super(parent);
+    super(parent, threeJsService);
   }
 
   ngOnInit(): void {

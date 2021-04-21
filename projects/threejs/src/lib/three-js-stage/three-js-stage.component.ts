@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, forwardRef, Input, NgModule, OnInit} from '@angular/core';
-import {Camera, GridHelper, PerspectiveCamera, Scene, WebGLRenderer} from 'three';
+import {Camera, Fog, GridHelper, HemisphereLight, PCFSoftShadowMap, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from 'three';
 import {ThreeJsService} from '../three-js.service';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {CommonModule} from '@angular/common';
@@ -40,13 +40,23 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
   ngOnInit(): void {
 
     this.scene = new Scene();
+    this.scene.fog = new Fog(this.backgroundColor, 10, 50);
 
     this.renderer = new WebGLRenderer({antialias: true});
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setClearColor(this.backgroundColor);
     this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = PCFSoftShadowMap;
+    this.renderer.outputEncoding = sRGBEncoding;
 
-    this.scene.add(new GridHelper(50, 1));
+    const hemiLight: HemisphereLight = new HemisphereLight(0xffffff, 0xffffff, 0.6);
+    hemiLight.position.set(0, 20, 0);
+    // hemiLight.color.setHSL( 0.6, 1, 0.6 );
+    // hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+    this.scene.add(hemiLight);
+
+    this.scene.add(new GridHelper(50, 10));
 
     this.hostElement.nativeElement.appendChild(this.renderer.domElement);
 
@@ -77,12 +87,20 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
   ngAfterViewInit(): void {
   }
 
-  add(o: ObjectTdComponent): void {
-    this.scene.add(o.object3D);
+  add(o: ObjectTdComponent, parentName?: string): void {
+    if (parentName) {
+      this.scene.getObjectByName(parentName)?.add(o.object3D);
+    } else {
+      this.scene.add(o.object3D);
+    }
   }
 
-  remove(o: ObjectTdComponent): void {
-    this.scene.remove(o.object3D);
+  remove(o: ObjectTdComponent, parentName?: string): void {
+    if (parentName) {
+      this.scene.getObjectByName(parentName)?.remove(o.object3D);
+    } else {
+      this.scene.remove(o.object3D);
+    }
   }
 
 }

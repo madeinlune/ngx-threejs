@@ -2,18 +2,25 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   SimpleChanges,
   SkipSelf
 } from '@angular/core';
 import {Object3D, Vector3} from 'three';
 import {ThreeJsParent} from '../models/three-js-parent';
+import {ThreeJsService} from '../three-js.service';
 
 export type InteractiveState = 'hover' | 'active' | null;
+
+export interface ObjectTdEvent {
+  component: ObjectTdComponent;
+}
 
 @Component({
   selector: 'tjs-object-td',
@@ -30,17 +37,34 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
 
   @Input()
   showHelper!: boolean;
+
   @Input()
   position!: Vector3;
+
   @Input()
   scale!: Vector3;
+
   @Input()
   rotation!: Vector3;
+
+  @Input()
+  data!: any;
+
+  @Input()
+  parentName!: string;
+
+  @Output()
+  objectHover: EventEmitter<ObjectTdEvent|null> = new EventEmitter<ObjectTdEvent|null>();
+
+  @Output()
+  objectClick: EventEmitter<ObjectTdEvent|null> = new EventEmitter<ObjectTdEvent|null>();
+
   private helper!: Object3D | null;
   #object3D!: Object3D;
 
   constructor(
-    @Optional() @SkipSelf() protected parent: ThreeJsParent
+    @Optional() @SkipSelf() protected parent: ThreeJsParent,
+    protected threeJsService: ThreeJsService
   ) {
   }
 
@@ -48,8 +72,21 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   set hovered(hovered: boolean) {
     if (hovered) {
       this.interactiveState = 'hover';
+      this.objectHover.emit({component: this});
+    } else if (this.interactiveState === 'hover') {
+      this.interactiveState = null;
+      this.objectHover.emit(null);
+    }
+  }
+
+  @Input()
+  set active(active: boolean) {
+    if (active) {
+      this.interactiveState = 'active';
+      this.objectClick.emit({component: this});
     } else {
       this.interactiveState = null;
+      this.objectClick.emit(null);
     }
   }
 
@@ -64,7 +101,7 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   }
 
   ngOnDestroy(): void {
-    this.parent.remove(this);
+    this.parent.remove(this, this.parentName);
   }
 
   ngOnInit(): void {
@@ -73,9 +110,9 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
 
   ngAfterViewInit(): void {
     if (this.parent) {
-      this.parent.add(this);
+      this.parent.add(this, this.parentName);
     } else {
-      console.warn('no parent for this light', this);
+      console.warn('no parent for this', this);
     }
     this.update();
     this.updatePosition();
@@ -101,7 +138,7 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
     if (changes?.showHelper) {
       this.updateHelper();
     }
-    console.log('this.hovered', this.hovered);
+
   }
 
   protected updateHelper(): void {

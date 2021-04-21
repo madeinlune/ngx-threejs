@@ -1,0 +1,9 @@
+<tjs-mesh
+  #box
+  [parentName]="selectedGroupName$|async"
+  [castShadow]="true"
+  [receiveShadow]="true"
+  [geometry]="{width: 0.7, height:0.7, depth: 0.7}|boxBufferGeometry"
+  [position]="{x: 0, y: 7, z: 0}|vector3"
+  [material]="{color: 'red', side:'front'|side}|meshPhongMaterial">
+</tjs-mesh>

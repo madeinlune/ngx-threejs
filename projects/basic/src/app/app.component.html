@@ -29,17 +29,16 @@
     [intensity]="0.5">
   </tjs-ambient-light>
 
-  <tjs-spotlight
-    [penumbra]="1"
-    [angle]="0.15"
+  <tjs-directional-light
     [position]="{x:10, y: 10, z: 10}|vector3"
     [showHelper]="true">
-  </tjs-spotlight>
+  </tjs-directional-light>
 
   <tjs-mesh
     #box1
     [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
     [position]="{x:-1.2, y: 0, z: 0}|vector3"
+    [scale]="(box1.interactiveState === 'hover'?{x:2, y: 2, z: 2}:{x:1, y: 1, z: 1})|vector3"
     [material]="{color: box1.interactiveState === 'hover'?'hotpink':'orange', side:'front'|side}|meshPhongMaterial">
   </tjs-mesh>
 

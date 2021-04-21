@@ -1,9 +1,10 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, NgModule, OnInit} from '@angular/core';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
 import {ObjectTdComponent} from '../../object-td/object-td.component';
-import {Group} from 'three';
+import {Group, Mesh} from 'three';
 import {ReplaySubject} from 'rxjs';
 import {filter, take} from 'rxjs/operators';
+import {CommonModule} from '@angular/common';
 
 export interface LoaderPassport {
 
@@ -26,6 +27,12 @@ export class GltfLoaderComponent extends ObjectTdComponent implements OnInit {
     this.passport$.next(value);
   }
 
+  @Input()
+  castShadow = false;
+
+  @Input()
+  receiveShadow = false;
+
   loader!: GLTFLoader;
 
   ngOnInit(): void {
@@ -43,10 +50,39 @@ export class GltfLoaderComponent extends ObjectTdComponent implements OnInit {
         this.loader = new GLTFLoader();
         this.loader.load(passport.url, (gltf) => {
           this.object3D.add(gltf.scene);
+
+          gltf.scene.traverse((object) => {
+
+              if (object instanceof Mesh) {
+                if (this.castShadow) {
+                  object.castShadow = this.castShadow;
+                }
+                if (this.receiveShadow) {
+                  object.receiveShadow = this.receiveShadow;
+                }
+              }
+
+            }
+          );
+
         });
 
       });
 
   }
+
+}
+
+@NgModule({
+  declarations: [
+    GltfLoaderComponent
+  ],
+  exports: [GltfLoaderComponent],
+  imports: [
+    CommonModule
+  ],
+  providers: []
+})
+export class GltfLoaderModule {
 
 }

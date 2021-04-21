@@ -42,12 +42,12 @@ export class TextShapeComponent extends ObjectTdComponent implements OnInit, Aft
 
   constructor(
     @Optional() @SkipSelf() protected parent: ThreeJsParent,
+    protected threeJsService: ThreeJsService,
     private hostElement: ElementRef,
-    private threeJsService: ThreeJsService,
     private threeJsFontService: ThreeJsFontService,
     private circleLayoutPipe: CircleLayoutPipe
   ) {
-    super(parent);
+    super(parent, threeJsService);
   }
 
   ngOnInit(): void {

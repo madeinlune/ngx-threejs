@@ -1,4 +1,5 @@
 export * from './cameras';
+export * from './group';
 export * from './lights';
 export * from './loaders';
 export * from './mesh';

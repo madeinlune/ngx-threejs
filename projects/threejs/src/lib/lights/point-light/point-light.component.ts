@@ -4,6 +4,7 @@ import {Group, Object3D, PointLight, PointLightHelper} from 'three';
 import {CommonModule} from '@angular/common';
 import {HELPERS_COLOR} from '../../providers/three-js.providers';
 import {ThreeJsParent} from '../../models/three-js-parent';
+import {ThreeJsService} from '../../three-js.service';
 
 export interface PointLightOptions extends LightOptions {
 
@@ -28,9 +29,10 @@ export class PointLightComponent extends LightComponent implements OnInit, OnDes
 
   constructor(
     @Optional() @SkipSelf() protected parent: ThreeJsParent,
+    protected threeJsService: ThreeJsService,
     @Inject(HELPERS_COLOR) private helpersColor: number
   ) {
-    super(parent);
+    super(parent, threeJsService);
   }
 
   ngOnInit(): void {

@@ -16,7 +16,6 @@ export interface BoxOptions {
 export class BoxBufferGeometryPipe implements PipeTransform {
 
   transform(options: BoxOptions): BoxBufferGeometry {
-    console.log('options', options);
     return new BoxBufferGeometry(
       options.width,
       options.height,

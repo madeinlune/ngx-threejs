@@ -1,0 +1,7 @@
+[build]
+  publish = "dist/routing"
+ command = "yarn run build-routing-prod"
+[[redirects]]
+ from="/*"
+  to="/index.html"
+  status=200

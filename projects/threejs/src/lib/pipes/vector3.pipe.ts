@@ -7,7 +7,6 @@ import {Vector3} from 'three';
 export class Vector3Pipe implements PipeTransform {
 
   transform(vector: { x: number, y: number, z: number }): Vector3 {
-    console.log('vector', vector);
     return new Vector3(vector.x, vector.y, vector.z);
   }
 

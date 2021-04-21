@@ -1,0 +1,78 @@
+<tjs-three-js-stage
+  #stage
+  [backgroundColor]="'white'"
+  [orbitControls]="orbitControls?.controls"
+  [camera]="defaultCamera.camera">
+
+  <tjs-mesh #ground
+            [receiveShadow]="true"
+            [material]="{color: 'white', side:'back'|side, depthWrite:false}|meshPhongMaterial"
+            [rotation]="{x:90|radians, y:0, z:0}|vector3"
+            [geometry]="{width: 100, height: 100}|planeBufferGeometry">
+  </tjs-mesh>
+
+  <tjs-orbit-controls
+    #orbitControls
+    [camera]="defaultCamera.camera"
+    [options]="{
+      enableDamping: true,
+      minDistance: 12,
+      maxDistance: 12,
+      minPolarAngle:0,
+      maxPolarAngle:100|radians
+    }"
+    [renderer]="stage.renderer">
+  </tjs-orbit-controls>
+
+  <tjs-perspective-camera
+    #defaultCamera>
+  </tjs-perspective-camera>
+
+  <tjs-directional-light
+    [castShadow]="true"
+    [position]="{x:10, y: 10, z: 10}|vector3"
+    [showHelper]="true">
+  </tjs-directional-light>
+
+  <tjs-gltf-loader
+    [castShadow]="true"
+    [receiveShadow]="true"
+    [position]="{x: 0, y: 1.2, z: 0}|vector3"
+    [scale]="{x: 3, y: 3, z: 3}|vector3"
+    [passport]="{url: 'assets/3d/rock/scene.gltf'}">
+  </tjs-gltf-loader>
+
+  <ng-template ngFor [ngForOf]="menu" let-menuItem let-i="index">
+
+    <tjs-group
+      [name]="'group-'+menuItem.id"
+      [position]="{x: 0, y: 0, z: 0}|circleLayout:15:(((360/menu.length)*i)|radians)">
+
+      <tjs-mesh
+        #box
+        [name]="'cube-'+i"
+        (objectClick)="onMenuObjectClicked($event)"
+        [data]="menuItem"
+        [castShadow]="true"
+        [receiveShadow]="true"
+        [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
+        [position]="{x:0, y:5, z:0}|vector3"
+        [material]="{color: 'blue', side:'front'|side}|meshPhongMaterial">
+      </tjs-mesh>
+
+    </tjs-group>
+
+  </ng-template>
+
+  <router-outlet></router-outlet>
+
+</tjs-three-js-stage>
+<!--
+
+<ng-container *ngIf="defaultCamera.camera">
+
+  <pre>x:{{defaultCamera.camera.position.x}}, y:{{defaultCamera.camera.position.y}}, z:{{defaultCamera.camera.position.z}}</pre>
+
+</ng-container>
+
+-->

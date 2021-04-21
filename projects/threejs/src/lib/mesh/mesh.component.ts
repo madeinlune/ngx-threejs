@@ -20,16 +20,17 @@ export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestro
   @Input()
   material!: MeshNormalMaterial;
 
+  @Input()
+  castShadow = false;
+
+  @Input()
+  receiveShadow = false;
+
 
   ngOnInit(): void {
 
-    console.log('this.material', this.material);
-
     this.object3D = new Mesh(this.geometry, this.material);
-    this.object3D.castShadow = true;
     this.object3D.name = this.name;
-
-    console.log('this.parent', this.parent);
 
   }
 
@@ -38,8 +39,12 @@ export class MeshComponent extends ObjectTdComponent implements OnInit, OnDestro
 
   protected update(changes?: SimpleChanges): void {
     super.update(changes);
-    if (changes?.material && this.object3D) {
-      (this.object3D as Mesh).material = this.material;
+    if (this.object3D) {
+      if (changes?.material) {
+        (this.object3D as Mesh).material = this.material;
+      }
+      (this.object3D as Mesh).castShadow = this.castShadow;
+      (this.object3D as Mesh).receiveShadow = this.receiveShadow;
     }
   }
 
