@@ -1,0 +1,54 @@
+app-root{
+
+  font-family: sans-serif;
+
+  .layer{
+    top:0;
+    left:0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .navigation{
+
+    pointer-events: none;
+    user-select: none;
+
+    display: flex;
+    justify-content: center;
+
+    padding-top: 2rem;
+
+    nav{
+
+      display: flex;
+      align-self: flex-start;
+
+      pointer-events: auto;
+
+      a + a{
+        margin-left: 1rem;
+      }
+
+      a {
+        color: black;
+        padding: 0.5em 0.75em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      a:hover {
+        color: blue;
+      }
+
+      a.active {
+        background-color: blue;
+        color: white;
+      }
+
+    }
+
+  }
+
+}

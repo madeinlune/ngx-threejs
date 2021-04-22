@@ -32,6 +32,7 @@ export class RockComponent implements OnInit {
 
   ngOnInit(): void {
     this.id$.subscribe(id => {
+      console.log('id', id);
       this.selectionService.contentId = id;
     });
   }

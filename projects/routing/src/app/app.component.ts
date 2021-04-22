@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, NgZone, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, NgZone, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ObjectTdEvent, OrbitControlsComponent, ThreeJsFontService, ThreeJsService} from 'threejs';
 import {ActivatedRoute, Event, NavigationEnd, Router} from '@angular/router';
 import {Content, MenuItem} from './models';
@@ -13,7 +13,8 @@ import {gsap} from 'gsap';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
 
@@ -58,6 +59,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('menu', this.menu);
     this.fontService.loadFont('assets/font/AauxPro-Thin.ttf');
     this.orbitControlsTarget$.subscribe();
     this.activatedRoute.url.subscribe(url => console.log('url', url));
@@ -73,8 +75,9 @@ export class AppComponent implements OnInit {
 
   onMenuObjectClicked($event: ObjectTdEvent | null): void {
     if ($event) {
+      console.log('$event.component.data.path', $event.component.data.path);
       this.ngZone.run(() => {
-        this.router.navigateByUrl($event.component.data.path, {state: {data: {parentName: $event.component.name}}});
+        this.router.navigateByUrl($event.component.data.path);
       });
     }
   }

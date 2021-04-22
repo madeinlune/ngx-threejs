@@ -9,11 +9,15 @@
     [material]="{color: 'red', side:'front'|side}|meshPhongMaterial">
   </tjs-mesh>
 
-  <tjs-text-shape
-    [circleLayout]="true"
-    [radius]="5"
-    [position]="{x: 0, y: 3, z: 2.5}|vector3" [size]="0.7">
-    <p #paragraph>{{(currentContent$|async).label}}</p>
-  </tjs-text-shape>
+  <ng-container *ngIf="currentContent$|async as currentContent">
+
+    <tjs-text-shape
+      [circleLayout]="true"
+      [radius]="5"
+      [position]="{x: 0, y: 3, z: 2.5}|vector3" [size]="0.7">
+      <p #paragraph>{{currentContent.label}}</p>
+    </tjs-text-shape>
+
+  </ng-container>
 
 </tjs-group>

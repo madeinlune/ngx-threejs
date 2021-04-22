@@ -24,6 +24,7 @@ export class SelectionService {
   currentContent$: Observable<Content | null> = this.selectedMenuItem$.pipe(
     map(selectedMenuItem => {
         if (selectedMenuItem) {
+          console.log('selectedMenuItem', selectedMenuItem);
           return this.contents.filter(content => content.id === selectedMenuItem.contentId).shift() as Content;
         }
         return null;

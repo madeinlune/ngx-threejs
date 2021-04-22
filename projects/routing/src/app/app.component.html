@@ -1,5 +1,6 @@
 <tjs-three-js-stage
   #stage
+  class="layer"
   [backgroundColor]="'white'"
   [orbitControls]="orbitControls.controls"
   [camera]="defaultCamera.camera">
@@ -68,7 +69,23 @@
   <router-outlet></router-outlet>
 
 </tjs-three-js-stage>
-<!--
+
+<div class="navigation layer">
+
+  <nav>
+
+    <a [routerLink]="['/']" [innerHTML]="'Rock'" [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{exact: true}"></a>
+
+    <ng-template ngFor [ngForOf]="menu" let-menuItem let-i="index">
+
+      <a [routerLink]="[menuItem.path]" [innerHTML]="menuItem.label" [routerLinkActive]="'active'"></a>
+
+    </ng-template>
+
+  </nav>
+
+  <!--
 
 <ng-container *ngIf="defaultCamera.camera">
 
@@ -77,3 +94,6 @@
 </ng-container>
 
 -->
+
+</div>
+

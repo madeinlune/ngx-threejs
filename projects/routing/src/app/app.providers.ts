@@ -24,11 +24,12 @@ export function menuFactory(): MenuItem[] {
 
   const menu: MenuItem[] = [];
   for (let i = 0; i < 5; i++) {
+    const id: number = i + 1;
     menu.push({
-      id: i,
-      label: 'Cube 0' + (i + 1),
-      path: 'rock/' + i,
-      contentId: i
+      id,
+      label: 'Cube 0' + id,
+      path: '/rock/' + id,
+      contentId: id
     });
   }
 
@@ -40,10 +41,11 @@ export function contentsFactory(): Content[] {
 
   const contents: Content[] = [];
   for (let i = 0; i < 5; i++) {
+    const id: number = i + 1;
     contents.push({
-      id: i,
-      label: 'Cube 0' + (i + 1),
-      path: 'rock/' + i
+      id,
+      label: 'Cube 0' + id,
+      path: '/rock/' + id
     });
   }
 
