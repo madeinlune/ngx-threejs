@@ -2,6 +2,15 @@ import {InjectionToken, Provider} from '@angular/core';
 import {Content, MenuItem} from './models';
 import {SlugifyPipe} from 'ngx-pipes';
 
+export interface Color{
+  color: string;
+  label: string;
+}
+
+export const COLORS = new InjectionToken<Color[]>(
+  'COLORS'
+);
+
 export const MENU = new InjectionToken<MenuItem[]>(
   'MENU'
 );
@@ -13,33 +22,64 @@ export const CONTENTS = new InjectionToken<Content[]>(
 export const APP_ROUTING_PROVIDERS: Provider[] = [
   SlugifyPipe,
   {
+    provide: COLORS,
+    useFactory: colorsFactory
+  },
+  {
     provide: MENU,
-    deps: [SlugifyPipe],
+    deps: [SlugifyPipe, COLORS],
     useFactory: menuFactory
   },
   {
     provide: CONTENTS,
-    deps: [SlugifyPipe],
+    deps: [SlugifyPipe, COLORS],
     useFactory: contentsFactory
   }
 ];
 
-export function menuFactory(
-  slugifyPipe: SlugifyPipe
-): MenuItem[] {
+export function colorsFactory(): Color[] {
 
-  const colors: string[] = ['#042A2B', '#5EB1BF', '#CDEDF6', '#EF7B45', '#D84727'];
-  const colorNames: string[] = ['Rich Black', 'Maximum Blue', 'Light Cyan', 'Mandarin', 'Vermilion'];
+  const colors: Color[] = [
+    {
+      color: '#042A2B',
+      label: 'Rich Black'
+    },
+    {
+      color: '#5EB1BF',
+      label: 'Maximum Blue'
+    },
+    {
+      color: '#CDEDF6',
+      label: 'Light Cyan'
+    },
+    {
+      color: '#EF7B45',
+      label: 'Mandarin'
+    },
+    {
+      color: '#D84727',
+      label: 'Vermilion'
+    }
+  ];
+  return colors;
+
+}
+
+export function menuFactory(
+  slugifyPipe: SlugifyPipe,
+  colors: Color[]
+): MenuItem[] {
 
   const menu: MenuItem[] = [];
   for (let i = 0; i < 5; i++) {
-    const label: string = colorNames[i];
+    const color: Color = colors[i];
+    const label: string = color.label;
     menu.push({
       id: i,
       label,
       path: '/color/' + slugifyPipe.transform(label),
       contentId: i,
-      color: colors[i]
+      color: color.color
     });
   }
 
@@ -48,20 +88,19 @@ export function menuFactory(
 }
 
 export function contentsFactory(
-  slugifyPipe: SlugifyPipe
+  slugifyPipe: SlugifyPipe,
+  colors: Color[]
 ): Content[] {
-
-  const colors: string[] = ['#042A2B', '#5EB1BF', '#CDEDF6', '#EF7B45', '#D84727'];
-  const colorNames: string[] = ['Rich Black', 'Maximum Blue', 'Light Cyan', 'Mandarin', 'Vermilion'];
 
   const contents: Content[] = [];
   for (let i = 0; i < 5; i++) {
-    const label: string = colorNames[i];
+    const color: Color = colors[i];
+    const label: string = color.label;
     contents.push({
       id: i,
       label,
       path: '/color/' + slugifyPipe.transform(label),
-      color: colors[i]
+      color: color.color
     });
   }
 
