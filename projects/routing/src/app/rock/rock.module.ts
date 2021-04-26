@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RockRoutingModule } from './rock-routing.module';
 import { RockComponent } from './rock.component';
 import {GroupModule, MeshModule, TextShapeModule, ThreeJsPipesModule} from 'threejs';
+import {NgMathPipesModule} from 'ngx-pipes';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {GroupModule, MeshModule, TextShapeModule, ThreeJsPipesModule} from 'thre
     ThreeJsPipesModule,
     MeshModule,
     TextShapeModule,
-    GroupModule
+    GroupModule,
+    NgMathPipesModule
   ]
 })
 export class RockModule { }

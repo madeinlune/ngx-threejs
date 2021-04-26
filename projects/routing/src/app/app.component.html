@@ -59,7 +59,7 @@
         [receiveShadow]="true"
         [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
         [position]="{x:0, y:5, z:0}|vector3"
-        [material]="{color: 'blue', side:'front'|side}|meshPhongMaterial">
+        [material]="{color: menuItem.color, side:'front'|side}|meshPhongMaterial">
       </tjs-mesh>
 
     </tjs-group>
@@ -74,12 +74,22 @@
 
   <nav>
 
-    <a [routerLink]="['/']" [innerHTML]="'Rock'" [routerLinkActive]="'active'"
+    <a class="home-link"
+       [routerLink]="['/']"
+       [innerHTML]="'Rock'"
+       [routerLinkActive]="'active'"
        [routerLinkActiveOptions]="{exact: true}"></a>
 
     <ng-template ngFor [ngForOf]="menu" let-menuItem let-i="index">
 
-      <a [routerLink]="[menuItem.path]" [innerHTML]="menuItem.label" [routerLinkActive]="'active'"></a>
+      <a  #rla="routerLinkActive"
+          class="section-link"
+          [style.backgroundColor]="rla.isActive?menuItem.color:null"
+          [routerLink]="[menuItem.path]"
+          [routerLinkActive]="'active'">
+        <span class="color-shape" [style.backgroundColor]="menuItem.color"></span>
+        <span [innerHTML]="menuItem.label"></span>
+      </a>
 
     </ng-template>
 

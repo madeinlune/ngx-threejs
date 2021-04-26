@@ -1,16 +1,16 @@
-app-root{
+app-root {
 
   font-family: sans-serif;
 
-  .layer{
-    top:0;
-    left:0;
+  .layer {
+    top: 0;
+    left: 0;
     position: absolute;
     width: 100vw;
     height: 100vh;
   }
 
-  .navigation{
+  .navigation {
 
     pointer-events: none;
     user-select: none;
@@ -20,14 +20,14 @@ app-root{
 
     padding-top: 2rem;
 
-    nav{
+    nav {
 
       display: flex;
       align-self: flex-start;
 
       pointer-events: auto;
 
-      a + a{
+      a + a {
         margin-left: 1rem;
       }
 
@@ -38,13 +38,35 @@ app-root{
         text-transform: uppercase;
       }
 
-      a:hover {
-        color: blue;
+      a {
+
+        display: flex;
+        align-items: center;
+
+        &.section-link {
+
+          &.active {
+            color: white;
+          }
+
+          .color-shape {
+            margin-right: 5px;
+            display: block;
+            width: 20px;
+            height: 20px;
+          }
+
+        }
       }
 
-      a.active {
-        background-color: blue;
-        color: white;
+      a.home-link {
+
+        font-weight: normal;
+
+      }
+
+      a.home-link.active {
+        font-weight: bold;
       }
 
     }

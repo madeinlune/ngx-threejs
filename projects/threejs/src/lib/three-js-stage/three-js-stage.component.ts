@@ -50,7 +50,7 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
     this.renderer.shadowMap.type = PCFSoftShadowMap;
     this.renderer.outputEncoding = sRGBEncoding;
 
-    const hemiLight: HemisphereLight = new HemisphereLight(0xffffff, 0xffffff, 0.6);
+    const hemiLight: HemisphereLight = new HemisphereLight(0xffffff, 0xffffff, 0.2);
     hemiLight.position.set(0, 20, 0);
     // hemiLight.color.setHSL( 0.6, 1, 0.6 );
     // hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
@@ -77,8 +77,6 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
     const height: number = window.innerHeight;
 
     this.renderer.setSize(width, height);
-
-    const pixelRatio = this.renderer.getPixelRatio();
 
     (this.camera as PerspectiveCamera).aspect = width / height;
     (this.camera as PerspectiveCamera).updateProjectionMatrix();

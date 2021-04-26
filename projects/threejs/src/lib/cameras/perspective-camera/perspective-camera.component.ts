@@ -19,7 +19,7 @@ export class PerspectiveCameraComponent extends CameraComponent implements OnIni
 
   ngOnInit(): void {
     this.camera.position.x = 8.978268137976093;
-    this.camera.position.y = 3.4259925772313005;
+    this.camera.position.y = 1.4259925772313005;
     this.camera.position.z = 2.766455512629831;
   }
 

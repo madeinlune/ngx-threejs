@@ -9,12 +9,12 @@ import {map} from 'rxjs/operators';
 })
 export class SelectionService {
 
-  contentId$: ReplaySubject<number | null> = new ReplaySubject<number | null>(1);
+  contentId$: ReplaySubject<number | string |null> = new ReplaySubject<number | string |null>(1);
 
   selectedMenuItem$: Observable<MenuItem | null> = this.contentId$.pipe(
     map(id => {
-        if (this.menu && id !== null && !isNaN(id)) {
-          return this.menu.filter(mItem => mItem.contentId === id).shift() as MenuItem;
+        if (this.menu && id !== null) {
+          return this.menu.filter(mItem => mItem.path.split('/').pop() === id).shift() as MenuItem;
         }
         return null;
       }
@@ -24,7 +24,6 @@ export class SelectionService {
   currentContent$: Observable<Content | null> = this.selectedMenuItem$.pipe(
     map(selectedMenuItem => {
         if (selectedMenuItem) {
-          console.log('selectedMenuItem', selectedMenuItem);
           return this.contents.filter(content => content.id === selectedMenuItem.contentId).shift() as Content;
         }
         return null;
@@ -35,6 +34,7 @@ export class SelectionService {
   selectedGroupName$: Observable<string | null> = this.selectedMenuItem$
     .pipe(
       map(selectedMenuItem => {
+        console.log('selectedMenuItem', selectedMenuItem);
         if (selectedMenuItem) {
           return 'group-' + selectedMenuItem?.id;
         }
@@ -48,7 +48,7 @@ export class SelectionService {
   ) {
   }
 
-  set contentId(id: number | null) {
+  set contentId(id: number | string |null) {
     this.contentId$.next(id);
   }
 }

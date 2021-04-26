@@ -16,7 +16,7 @@ export class RockComponent implements OnInit {
 
   id$: Observable<number> = this.activatedRoute.params.pipe(
     filter(params => !!params?.id),
-    map(params => parseInt(params.id, 10))
+    map(params => params.id)
   );
 
   selectedGroupName$: Observable<string | null> = this.selectionService.selectedGroupName$;

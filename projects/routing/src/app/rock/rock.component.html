@@ -1,22 +1,37 @@
 <tjs-group [parentName]="selectedGroupName$|async">
 
-  <tjs-mesh
-    #box
-    [castShadow]="true"
-    [receiveShadow]="true"
-    [geometry]="{width: 0.7, height:0.7, depth: 0.7}|boxBufferGeometry"
-    [position]="{x: 0, y: 7, z: 0}|vector3"
-    [material]="{color: 'red', side:'front'|side}|meshPhongMaterial">
-  </tjs-mesh>
-
   <ng-container *ngIf="currentContent$|async as currentContent">
 
-    <tjs-text-shape
-      [circleLayout]="true"
-      [radius]="5"
-      [position]="{x: 0, y: 3, z: 2.5}|vector3" [size]="0.7">
-      <p #paragraph>{{currentContent.label}}</p>
-    </tjs-text-shape>
+    <tjs-mesh
+      #box
+      [castShadow]="true"
+      [receiveShadow]="true"
+      [rotation]="{x: 0, y: 45|radians, z: 0}|vector3"
+      [geometry]="{width: 0.7, height:0.7, depth: 0.7}|boxBufferGeometry"
+      [position]="{x: 0, y: 7, z: 0}|vector3"
+      [scale]="{x: 0.5, y: 0.5, z: 0.5}|vector3"
+      [material]="{color: currentContent.color, side:'front'|side}|meshPhongMaterial">
+    </tjs-mesh>
+
+    <tjs-group [position]="{x: 0, y: 5, z: 0}|vector3">
+
+      <ng-template ngFor [ngForOf]="[0,1,2]" let-i="index">
+
+        <tjs-text-shape
+          [rotation]="{x: 0, y: ((360/3)*i)|radians, z: 0}|vector3"
+          [position]="{x: 0, y: 0, z: 0}|circleLayout:5:(((360/3)*i)|radians)" [size]="0.5">
+          <p #paragraph>{{currentContent.label}}</p>
+        </tjs-text-shape>
+
+        <tjs-text-shape
+          [rotation]="{x: 0, y: (180 + ((360/3)*i))|radians, z: 0}|vector3"
+          [position]="{x: 0, y: 0, z: 0}|circleLayout:5:(((360/3)*i)|radians)" [size]="0.5">
+          <p #paragraph>{{currentContent.label}}</p>
+        </tjs-text-shape>
+
+      </ng-template>
+
+    </tjs-group>
 
   </ng-container>
 

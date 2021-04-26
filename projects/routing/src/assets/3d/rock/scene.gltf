@@ -135,16 +135,16 @@
   ],
   "images": [
     {
-      "uri": "textures/defaultMat_diffuse.png"
+      "uri": "textures/defaultMat_diffuse.jpg"
     },
     {
       "uri": "textures/defaultMat_specularGlossiness.png"
     },
     {
-      "uri": "textures/defaultMat_normal.png"
+      "uri": "textures/defaultMat_normal.jpg"
     },
     {
-      "uri": "textures/defaultMat_occlusion.png"
+      "uri": "textures/defaultMat_occlusion.jpg"
     }
   ],
   "materials": [
