@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start-basic": "ng serve basic",
-    "start-routing": "ng serve routing",
+    "start-routing": "ng serve routing --host 0.0.0.0",
     "build-routing-prod": "ng build threejs --prod && ng build routing --prod",
     "deploy-routing": "netlify deploy",
     "build-routing-deploy": "npm run build-routing-prod && npm run deploy-routing"

@@ -67,6 +67,9 @@ export class ThreeJsService {
 
   onTouchStart(event: TouchEvent): void {
 
+    this.mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+
     if (this.clicked) {
       this.clicked.active = false;
     }

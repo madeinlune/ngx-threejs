@@ -67,22 +67,22 @@ export class OrbitControlsComponent implements OnInit, OnChanges {
   public controls!: OrbitControls;
 
   ngOnInit(): void {
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (this.camera && this.renderer) {
 
       if (!this.controls) {
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
       }
 
     }
     if (this.controls) {
       if (this.target) {
         this.controls.target.set(this.target.x, this.target.y, this.target.z);
+      } else {
+        this.controls.target.set(0, 0, 0);
       }
       if (this.options) {
         const options: OrbitControlsOptions = this.options;
@@ -94,6 +94,7 @@ export class OrbitControlsComponent implements OnInit, OnChanges {
           }
         });
       }
+      this.controls.update();
     }
 
   }

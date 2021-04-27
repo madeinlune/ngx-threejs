@@ -15,6 +15,7 @@
   <tjs-orbit-controls
     #orbitControls
     [camera]="defaultCamera.camera"
+    [target]="{x: 0, y:1, z:0}|vector3"
     [options]="{
       enableDamping: true,
       minDistance: 12,
@@ -26,6 +27,7 @@
   </tjs-orbit-controls>
 
   <tjs-perspective-camera
+    [position]="{x: 8.978268137976093, y:1.4259925772313005, z:2.766455512629831}|vector3"
     #defaultCamera>
   </tjs-perspective-camera>
 
