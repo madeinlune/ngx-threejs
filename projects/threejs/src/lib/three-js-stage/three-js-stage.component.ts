@@ -41,7 +41,7 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
 
     this.scene = new Scene();
     // TODO add fog as Scene Param
-    this.scene.fog = new Fog(this.backgroundColor, 10, 50);
+    this.scene.fog = new Fog(this.backgroundColor, 15, 50);
 
     this.renderer = new WebGLRenderer({antialias: true});
     this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -60,6 +60,12 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
     }
     this.threeJsService.scene = this.scene;
     this.threeJsService.renderer = this.renderer;
+
+    this.renderer.domElement.addEventListener('mousemove', this.threeJsService.onMouseMove.bind(this.threeJsService), false);
+    this.renderer.domElement.addEventListener('touchmove', this.threeJsService.onTouchMove.bind(this.threeJsService), false);
+    this.renderer.domElement.addEventListener('click', this.threeJsService.onMouseClick.bind(this.threeJsService), false);
+    this.renderer.domElement.addEventListener('touchstart', this.threeJsService.onTouchStart.bind(this.threeJsService), false);
+    // this.threeJsService.renderer.physicallyCorrectLights = true;
 
     this.threeJsService.animate();
 

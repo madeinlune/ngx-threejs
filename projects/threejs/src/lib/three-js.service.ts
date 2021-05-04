@@ -28,11 +28,6 @@ export class ThreeJsService {
     private ngZone: NgZone
   ) {
 
-    window.addEventListener('mousemove', this.onMouseMove.bind(this), false);
-    window.addEventListener('touchmove', this.onTouchMove.bind(this), false);
-    window.addEventListener('click', this.onMouseClick.bind(this), false);
-    window.addEventListener('touchstart', this.onTouchStart.bind(this), false);
-
   }
 
   onMouseMove(event: MouseEvent): void {

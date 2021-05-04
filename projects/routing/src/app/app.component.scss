@@ -1,5 +1,7 @@
 app-root {
 
+  --color-sketchfab: #1caad9;
+
   font-family: sans-serif;
 
   .layer {
@@ -69,6 +71,47 @@ app-root {
         font-weight: bold;
       }
 
+    }
+
+  }
+
+  .sketchfab-group{
+
+    position: absolute;
+    bottom:20px;
+    left: 20px;
+    pointer-events: auto;
+    font-size: 12px;
+
+    a{
+      pointer-events: auto;
+      color: var(--color-sketchfab);
+    }
+  }
+
+  .madeinlune-group{
+
+    position: absolute;
+    bottom:20px;
+    right: 20px;
+    pointer-events: auto;
+
+    background-color: #111034;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px;
+
+    h3{
+      margin: 0;
+      color: #4FBAFF;
+    }
+    p{
+      margin: 0;
+    }
+    a{
+      color: inherit;
+      text-decoration: none;
+      opacity: 0.5;
     }
 
   }

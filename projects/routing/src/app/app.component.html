@@ -7,7 +7,7 @@
 
   <tjs-mesh #ground
             [receiveShadow]="true"
-            [material]="{color: 'white', side:'back'|side, depthWrite:false}|meshPhongMaterial"
+            [material]="{color: 'white', side:'both'|side, depthWrite:false}|meshPhongMaterial"
             [rotation]="{x:90|radians, y:0, z:0}|vector3"
             [geometry]="{width: 100, height: 100}|planeBufferGeometry">
   </tjs-mesh>
@@ -51,9 +51,9 @@
     [isButton]="true"
     [castShadow]="true"
     [receiveShadow]="true"
-    [position]="{x: 0, y: 1.2, z: 0}|vector3"
+    [position]="{x: 0, y: 2.6, z: 0}|vector3"
     [scale]="{x: 3, y: 3, z: 3}|vector3"
-    [passport]="{url: 'assets/3d/rock/scene.gltf'}">
+    [passport]="{url: 'assets/3d/rock2/scene.gltf'}">
   </tjs-gltf-loader>
 
   <ng-template ngFor [ngForOf]="menu" let-menuItem let-i="index">
@@ -107,6 +107,19 @@
     </ng-template>
 
   </nav>
+
+  <div class="credits-group">
+
+    <div class="sketchfab-group">
+      <a [href]="'https://skfb.ly/6nvFy'" target="_blank" rel="noreferrer">Rock</a> by <a href="https://sketchfab.com/irs1182" target="_blank" rel="noreferrer">irs1182</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">Creative Commons Attribution</a>.
+    </div>
+
+    <div class="madeinlune-group">
+      <h3>Routing 3D POIs</h3>
+      <p>a Made in Lune experiment</p><a [href]="'https://github.com/madeinlune/ngx-threejs'" target="_blank" rel="noreferrer"><small>ngx-threejs on GitHub</small></a>
+    </div>
+
+  </div>
 
   <!--
 

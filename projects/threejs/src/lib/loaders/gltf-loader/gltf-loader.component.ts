@@ -55,6 +55,7 @@ export class GltfLoaderComponent extends ObjectTdComponent implements OnInit {
 
               if (object instanceof Mesh) {
                 object.userData = {component: this};
+                object.material.metalness = 0;
                 if (this.castShadow) {
                   object.castShadow = this.castShadow;
                 }

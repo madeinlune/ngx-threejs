@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {Light} from 'three';
+import {HemisphereLight, Light} from 'three';
 import {ObjectTdComponent} from '../object-td/object-td.component';
 import {Color} from 'three/src/math/Color';
 
@@ -39,7 +39,9 @@ export class LightComponent extends ObjectTdComponent implements OnInit, OnDestr
         this.light.color = new Color(this.color);
       }
 
-      this.light.castShadow = this.castShadow;
+      if (this.light.type !== 'HemisphereLight') {
+        this.light.castShadow = this.castShadow;
+      }
 
     }
 
