@@ -1,17 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {
-  AmbientLightModule, GltfLoaderModule,
+  AmbientLightModule,
+  DirectionalLightModule,
+  GltfLoaderModule,
+  GroupModule,
+  HemisphereLightModule,
   MeshModule,
   OrbitControlsModule,
   PerspectiveCameraModule,
-  SpotlightModule, THREE_JS_PROVIDERS,
+  PlaneBufferGeometryModule,
+  SpotlightModule,
+  THREE_JS_PROVIDERS,
   ThreeJsPipesModule,
-  ThreeJsStageModule,
-  PlaneBufferGeometryModule, DirectionalLightModule, GroupModule
+  ThreeJsStageModule
 } from 'threejs';
 import {NgArrayPipesModule, NgMathPipesModule} from 'ngx-pipes';
 import {APP_ROUTING_PROVIDERS} from './app.providers';
@@ -37,7 +42,8 @@ import {CustomReuseStrategy} from './custom-reuse-strategy';
     NgMathPipesModule,
     DirectionalLightModule,
     NgArrayPipesModule,
-    GroupModule
+    GroupModule,
+    HemisphereLightModule
   ],
   providers: [
     THREE_JS_PROVIDERS,
@@ -46,4 +52,5 @@ import {CustomReuseStrategy} from './custom-reuse-strategy';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

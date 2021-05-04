@@ -4,7 +4,7 @@ import {ObjectTdComponent} from '../object-td/object-td.component';
 import {Color} from 'three/src/math/Color';
 
 export interface LightOptions {
-  color?: Color;
+  color?: Color | string | number;
   intensity?: number;
   castShadow?: boolean;
 }
@@ -16,7 +16,7 @@ export interface LightOptions {
 export class LightComponent extends ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, LightOptions {
 
   @Input()
-  color!: Color;
+  color!: Color | string | number;
 
   @Input()
   intensity!: number;
@@ -36,7 +36,7 @@ export class LightComponent extends ObjectTdComponent implements OnInit, OnDestr
       }
 
       if (this.color) {
-        this.light.color = this.color;
+        this.light.color = new Color(this.color);
       }
 
       this.light.castShadow = this.castShadow;

@@ -36,6 +36,7 @@
 
   <tjs-mesh
     #box1
+    [isButton]="true"
     [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
     [position]="{x:-1.2, y: 0, z: 0}|vector3"
     [scale]="(box1.interactiveState === 'hover'?{x:2, y: 2, z: 2}:{x:1, y: 1, z: 1})|vector3"
@@ -46,6 +47,7 @@
 
   <tjs-mesh
     #box2
+    [isButton]="true"
     [geometry]="{width: 1, height:1, depth: 1}|boxBufferGeometry"
     [position]="{x:1.2, y: 0, z: 0}|vector3"
     [material]="{color: box2.interactiveState === 'hover'?'red':'orange', side:'front'|side}|meshPhongMaterial">

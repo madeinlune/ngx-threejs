@@ -3,3 +3,4 @@ export * from './ambient-light/ambient-light.component';
 export * from './directional-light/directional-light.component';
 export * from './point-light/point-light.component';
 export * from './spotlight/spotlight.component';
+export * from './hemisphere-light/hemisphere-light.component';

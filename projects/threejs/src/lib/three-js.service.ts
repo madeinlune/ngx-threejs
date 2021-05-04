@@ -1,5 +1,5 @@
 import {Injectable, NgZone} from '@angular/core';
-import {Camera, Raycaster, Scene, Vector2, WebGLRenderer} from 'three';
+import {Camera, Intersection, Raycaster, Scene, Vector2, WebGLRenderer} from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {Renderable} from './models/renderable';
 import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer';
@@ -107,28 +107,31 @@ export class ThreeJsService {
       this.raycaster.setFromCamera(this.mouse, this.camera);
 
       // calculate objects intersecting the picking ray
-      const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+      const intersects: Intersection[] = this.raycaster.intersectObjects(this.scene.children, true)
+        .filter(intersect => intersect.object.userData?.component?.isButton);
 
       if (intersects.length > 0) {
 
-        if (this.intersected !== intersects[0].object.userData?.component) {
+        const component: ObjectTdComponent = intersects[0].object.userData?.component;
+        if (this.intersected !== component) {
 
           if (this.intersected) {
             this.ngZone.run(() => {
               if (this.intersected) {
+
                 this.intersected.hovered = false;
+                this.renderer.domElement.style.cursor = 'auto';
               }
             });
           }
 
-          this.intersected = intersects[0].object.userData?.component;
-          if (this.intersected) {
-            this.ngZone.run(() => {
-              if (this.intersected) {
-                this.intersected.hovered = true;
-              }
-            });
-          }
+          this.intersected = component;
+          this.ngZone.run(() => {
+            if (this.intersected) {
+              this.intersected.hovered = true;
+              this.renderer.domElement.style.cursor = 'pointer';
+            }
+          });
 
         }
 
@@ -138,6 +141,7 @@ export class ThreeJsService {
           this.ngZone.run(() => {
             if (this.intersected) {
               this.intersected.hovered = false;
+              this.renderer.domElement.style.cursor = 'auto';
             }
           });
         }

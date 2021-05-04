@@ -40,6 +40,7 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
   ngOnInit(): void {
 
     this.scene = new Scene();
+    // TODO add fog as Scene Param
     this.scene.fog = new Fog(this.backgroundColor, 10, 50);
 
     this.renderer = new WebGLRenderer({antialias: true});
@@ -49,12 +50,6 @@ export class ThreeJsStageComponent implements OnInit, AfterViewInit, ThreeJsPare
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = PCFSoftShadowMap;
     this.renderer.outputEncoding = sRGBEncoding;
-
-    const hemiLight: HemisphereLight = new HemisphereLight(0xffffff, 0xffffff, 0.2);
-    hemiLight.position.set(0, 20, 0);
-    // hemiLight.color.setHSL( 0.6, 1, 0.6 );
-    // hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-    this.scene.add(hemiLight);
 
     this.scene.add(new GridHelper(50, 10));
 

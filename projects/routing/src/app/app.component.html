@@ -31,6 +31,15 @@
     #defaultCamera>
   </tjs-perspective-camera>
 
+  <tjs-hemisphere-light
+    [castShadow]="true"
+    [groundColor]="'#FFFFFF'"
+    [color]="'#FFFFFF'"
+    [intensity]="0.2"
+    [position]="{x:10, y: 10, z: 10}|vector3"
+    [showHelper]="true">
+  </tjs-hemisphere-light>
+
   <tjs-directional-light
     [castShadow]="true"
     [position]="{x:10, y: 10, z: 10}|vector3"
@@ -39,6 +48,7 @@
 
   <tjs-gltf-loader
     (objectClick)="onRockClicked($event)"
+    [isButton]="true"
     [castShadow]="true"
     [receiveShadow]="true"
     [position]="{x: 0, y: 1.2, z: 0}|vector3"
@@ -54,6 +64,7 @@
 
       <tjs-mesh
         #box
+        [isButton]="true"
         [name]="'cube-'+i"
         (objectClick)="onMenuObjectClicked($event)"
         [data]="menuItem"

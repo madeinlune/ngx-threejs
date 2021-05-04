@@ -51,6 +51,9 @@ export class ObjectTdComponent implements OnInit, OnDestroy, AfterViewInit, OnCh
   data!: any;
 
   @Input()
+  isButton = false;
+
+  @Input()
   parentName: string | undefined | null;
 
   @Output()

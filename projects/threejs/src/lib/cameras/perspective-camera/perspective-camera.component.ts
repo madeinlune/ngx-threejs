@@ -11,7 +11,7 @@ import {CameraComponent, CameraModule} from '../camera.component';
 })
 export class PerspectiveCameraComponent extends CameraComponent implements OnInit {
 
-  camera: PerspectiveCamera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 100);
+  camera: PerspectiveCamera = new PerspectiveCamera(70, window.innerWidth / window.innerHeight);
 
   ngOnInit(): void {
     this.object3D = this.camera;
