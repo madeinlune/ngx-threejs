@@ -180,6 +180,12 @@
       "sourceRoot": "projects/routing/src",
       "prefix": "app",
       "architect": {
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "baseHref": "https:/madeinlune.github.io/ngx-threejs/"
+          }
+        },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
